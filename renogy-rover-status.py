@@ -147,7 +147,7 @@ class RenogyRover(minimalmodbus.Instrument):
 		return '{}{}'.format(registers[0], registers[1])
 
 if __name__ == '__main__':
-	rover = RenogyRover('/dev/ttyAMA0', 1)
+	rover = RenogyRover('/dev/ttyUSB0', 1)
 	rover.write_register(0x010A, False)
 	print('Model.............................'+str(rover.read_string(0x000C, 6).strip()+rover.read_string(0x0012, 2).strip()))
 	print(' Type.............................'+str(rover.mtype))

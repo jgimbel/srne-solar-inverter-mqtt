@@ -1,2 +1,3 @@
-# renogy-rover-modbus
-Scripts read and write Renogy Rover registers
+# SRNE Solar Inverter/Charger
+
+This is a repo for publishing data from rs485 to mqtt (with home assistant auto config enabled)
