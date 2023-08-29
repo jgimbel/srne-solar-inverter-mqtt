@@ -1,0 +1,13 @@
+[Unit]
+Description=SRNE Inverter
+After=network.target
+
+[Service]
+User=user
+WorkingDirectory=/opt/snre-solar-inverter-mqtt
+ExecStart=/bin/bash -c 'source /opt/snre-solar-inverter-mqtt/env/bin/activate && python snre-solar-inverter-mqtt.py --loop'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
