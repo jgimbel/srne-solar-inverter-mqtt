@@ -81,7 +81,7 @@ cmds = {
 }
 
 mqtt_client = paho.Client()
-mqtt_client.connect('localhost', 1883)
+mqtt_client.connect('homeassistant.local', 1883)
 for name, vals in cmds.items():
     print(name)
     value = instr.read_register(*vals['cmd'])
