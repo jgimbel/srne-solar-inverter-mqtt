@@ -10,7 +10,6 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('--dev', help='Device Path [default /dev/ttyUSB0]', type=str, default='/dev/ttyUSB0')
 parser.add_argument('--device-id', help='RS485 Device ID [default 1]', type=int, default=1)
-parser.add_argument('--loop', help='amount of seconds to wait between mqtt publishes', type=int, default=60)
 
 args = parser.parse_args()
 instr = minimalmodbus.Instrument(args.dev, args.device_id)
@@ -83,20 +82,18 @@ cmds = {
 
 mqtt_client = paho.Client()
 mqtt_client.connect('localhost', 1883)
-while True:
-    for name, vals in cmds.items():
-        print(name)
-        value = instr.read_register(*vals['cmd'])
-        print(value)
-        print('publishing topic')
-        topic = f'homeassistant/sensor/snre-{name}/state'
-        mqtt_client.publish(f'homeassistant/sensor/snre-{name}/config', json.dumps({
-            'state_topic': topic,
-            'uniq_id': f'modbus-{args.device_id}-{name}',
-            **{key: vals[key] for key in vals if key != 'cmd'}
-        }))
-        sleep(.1)
-        mqtt_client.publish(topic, value, retain=False)
-        sleep(.1)
-    sleep(args.loop)
+for name, vals in cmds.items():
+    print(name)
+    value = instr.read_register(*vals['cmd'])
+    print(value)
+    print('publishing topic')
+    topic = f'homeassistant/sensor/snre-{name}/state'
+    mqtt_client.publish(f'homeassistant/sensor/snre-{name}/config', json.dumps({
+        'state_topic': topic,
+        'uniq_id': f'modbus-{args.device_id}-{name}',
+        **{key: vals[key] for key in vals if key != 'cmd'}
+    }))
+    sleep(.1)
+    mqtt_client.publish(topic, value, retain=False)
+    sleep(.1)
 
