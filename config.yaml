@@ -23,6 +23,25 @@ services:
 discovery:
   - mqtt
 
+homeassistant_api: true
+host_network: true
+uart: true
+usb: true
+gpio: true
+audio: true
+apparmor: false
+host_dbus: true
+docker_api: true
+privileged:
+  - NET_ADMIN
+  - SYS_ADMIN
+  - SYS_RAWIO
+  - SYS_TIME
+  - SYS_NICE
+devices:
+  - /dev/ttyUSB*
+  - /dev/serial/**
+
 
 options:
   device: /dev/ttyUSB0
