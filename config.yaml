@@ -1,0 +1,41 @@
+name: "SRNE Monitor"
+description: "Monitor SRNE Solar Inverter Combo values"
+url: https://github.com/jgimbel/srne-solar-inverter-mqtt
+version: "1.0"
+slug: "srnemonitor"
+init: false
+host_dbus: true
+apparmor: false
+
+homeassistant_api: true # http://supervisor/core/api
+hassio_api: true        # http://supervisor
+
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+
+services:
+  - mqtt:need
+
+discovery:
+  - mqtt
+
+
+options:
+  device: /dev/ttyUSB0
+  device_id: 1
+  sample_period: 1.0
+
+schema:
+  devices: str
+  device_id: "int(1,65535)"
+
+  mqtt_user: "str?"
+  mqtt_password: "str?"
+  mqtt_broker: "str?"
+  mqtt_port: "int(1,65535)?"
+
+  sample_period: "float"
