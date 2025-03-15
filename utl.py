@@ -59,14 +59,13 @@ def get_mqtt_client():
 
         logger.info('connecting mqtt %s@%s', user_config.mqtt_user, user_config.mqtt_broker)
         # paho_monkey_patch()
-        mqtt_client = paho.mqtt.client.Client(CallbackAPIVersion.VERSION2)
+        mqtt_client = paho.Client(CallbackAPIVersion.VERSION2)
         mqtt_client.enable_logger(logger)
         if user_config.get('mqtt_user', None):
             mqtt_client.username_pw_set(user_config.mqtt_user, user_config.mqtt_password)
 
         try:
             mqtt_client.connect(user_config.mqtt_broker, port=user_config.get('mqtt_port', 1883))
-            mqtt_client.loop_start()
         except Exception as ex:
             logger.error('mqtt connection error %s', ex)
     else:
