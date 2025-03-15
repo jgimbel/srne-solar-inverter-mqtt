@@ -30,7 +30,7 @@ options:
   sample_period: 1.0
 
 schema:
-  devices: str
+  device: str
   device_id: "int(1,65535)"
 
   mqtt_user: "str?"
