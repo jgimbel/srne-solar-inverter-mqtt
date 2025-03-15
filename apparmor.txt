@@ -1,0 +1,33 @@
+profile snremonitor /usr/bin/homeassistant {
+    include <abstractions/base>
+    include <abstractions/nameservice>
+    include <abstractions/ssl_certs>
+    
+    capability net_admin,
+    capability net_raw,
+    
+    network inet stream,
+    network inet6 stream,
+    network unix stream,
+    network netlink raw,
+    
+    /etc/homeassistant/** r,
+    /var/lib/homeassistant/** rw,
+    /usr/share/hass/** r,
+    /dev/ttyUSB* rw,
+    /dev/ttyAMA* rw,
+    /dev/serial/* rw,
+    
+    /run/home-assistant.pid rw,
+    /var/log/home-assistant.log rw,
+    
+    /usr/bin/python3 rix,
+    /usr/local/lib/python*/** r,
+    
+    @{PROC}/[0-9]*/net/ r,
+    @{PROC}/sys/net/ r,
+    @{PROC}/[0-9]*/task/[0-9]*/status r,
+    
+    deny /root/ rw,
+    deny /home/*/ rw,
+}
